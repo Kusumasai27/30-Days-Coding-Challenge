@@ -1,0 +1,42 @@
+ Q. Given a balanced parentheses string s, return the score of the string.
+The score of a balanced parentheses string is based on the following rule:
+"()" has score 1.
+AB has score A + B, where A and B are balanced parentheses strings.
+(A) has score 2 * A, where A is a balanced parentheses string.
+ 
+Example 1:
+Input: s = "()"
+Output: 1
+
+Example 2:
+Input: s = "(())"
+Output: 2
+
+Example 3:
+Input: s = "()()"
+Output: 2
+ 
+Code:
+
+class Solution:
+    def scoreOfParentheses(self, s: str) -> int:
+        stack = []
+        for ch in s:
+            if(ch == '('):
+                stack.append(ch)
+            else:
+                value = 0
+                while(stack[-1] != '('):
+                    value += stack[-1]
+                    stack.pop()
+                stack.pop()
+                if(value == 0):
+                    stack.append(1)
+                else:
+                    stack.append(2*value)
+        while(len(stack) > 1):
+            a = stack.pop()
+            b = stack.pop()
+            stack.append(a + b)
+        return stack[-1]
+
