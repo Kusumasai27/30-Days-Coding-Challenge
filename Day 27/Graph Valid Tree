@@ -1,0 +1,33 @@
+You are given an integer n representing the number of nodes in a graph labeled from 0 to n - 1. You are also given a list of undirected edges, where each edge is represented as a pair [u, v], that connects nodes u and v.
+Write a function to check whether these edges make up a valid tree.
+Return true if and only if the given edges form a valid tree.
+
+Constraints 
+The graph must be connected: every node must be reachable from every other node.
+The graph must have no cycles.
+For n nodes, a valid tree must have exactly n - 1 edges.
+You can assume no duplicate edges will appear.
+because the graph is undirected, [u, v] is the same as [v, u]. 
+
+Example 1:
+Input: n = 5, edges = [[0,1], [0,2], [0,3], [1,4]]
+Output: true 
+
+Example 2:
+Input: n = 5, edges = [[0,1], [1,2], [2,3], [1,3], [1,4]]
+Output: false 
+
+
+Code:
+
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        if len(edges) != n - 1:
+            return False
+        if n == 1:
+            return True
+        nodes = set()
+        for e in edges:
+            nodes.add(e[0])
+            nodes.add(e[1])
+        return len(nodes) == n
