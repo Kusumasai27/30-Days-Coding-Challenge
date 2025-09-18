@@ -1,0 +1,27 @@
+Q. There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei] indicates that there is a flight from city fromi to city toi with cost pricei.
+You are also given three integers src, dst, and k, return the cheapest price from src to dst with at most k stops. If there is no such route, return -1.
+
+ 
+Code:
+
+from heapq import heappush, heappop
+from collections import defaultdict
+
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        G = defaultdict(list)
+        for v, w, d in flights:
+            G[v].append((w,d))
+        h = [(0, 0, src)]
+        visited = set()
+        while h:
+            d, curk, v = heappop(h)
+            if v == dst: return d
+            if (v, curk) in visited or curk > k: continue
+            visited.add((v, curk))
+            for w, ecost in G[v]:
+                heappush(h, (d+ecost, curk + 1, w))
+        return -1
+            
+            
+        
